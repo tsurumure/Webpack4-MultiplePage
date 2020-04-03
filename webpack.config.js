@@ -12,9 +12,9 @@ const jquery = require('jquery')
 module.exports = {
     devtool: '', // 'source-map',
     entry: {
-        common: path.join(__dirname, './src/entry/common.js'),
-        index: path.join(__dirname, './src/entry/index.js'),
-        about: path.join(__dirname, './src/entry/about.js')
+        common: path.join(__dirname, './src/common.js'),
+        index: path.join(__dirname, './src/index.js'),
+        about: path.join(__dirname, './src/about.js')
     },
     output: {
         path: path.join(__dirname, './dist'),
