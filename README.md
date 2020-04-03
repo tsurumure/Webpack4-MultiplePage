@@ -13,6 +13,7 @@ $ npm run dev
 ```
 
 ##### 生成文件目录
+```
 ├─ dist
 │  ├─ css
 │  │  ├─ common.css
@@ -24,3 +25,4 @@ $ npm run dev
 │  │  ├─ index.js
 │  ├─ about.html
 │  ├─ index.html
+```
