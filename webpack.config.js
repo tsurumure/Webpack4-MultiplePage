@@ -7,7 +7,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 
-const jquery = require('jquery')
+const SpritesmithPlugin = require('webpack-spritesmith')
 
 module.exports = {
     devtool: '', // 'source-map',
@@ -29,7 +29,7 @@ module.exports = {
                     options: {
                         limit: 0, // 默认大于 1024 * 1 kb的图片，转为base64，设置 0 则不转换
                         name: '[name].[hash:6].[ext]', // '[name].[hash:6].[ext]',
-                        outputPath: 'images/'
+                        outputPath: 'img/'
                     }
                 }
             },
@@ -75,8 +75,32 @@ module.exports = {
             })
         ]
     },
+    resolve: {
+        modules: ["node_modules", "spritesmith-generated"]
+    },
     plugins: [
-        new CleanWebpackPlugin(),
+        // 图片精灵
+        new SpritesmithPlugin({
+            src: {
+                cwd: path.resolve(__dirname, 'src/img/sprites'),
+                glob: '*.png'
+            },
+            target: {
+                image: path.resolve(__dirname, 'src/img/sprite.[hash:6].png'),
+                css: path.resolve(__dirname, 'src/styles/sprite.css')
+            },
+            apiOptions: {
+                cssImageRef: "../img/sprite.[hash:6].png"
+            }
+        }),
+        // 清理
+        new CleanWebpackPlugin({
+            cleanAfterEveryBuildPatterns: [
+                '!img/sprite.*.png'
+            ],
+            verbose: true
+        }),
+        //
         new webpack.ProvidePlugin({
             $: "jquery"
         }),
